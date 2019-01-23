@@ -16,7 +16,8 @@ const ENDPOINTS = {
 
 const getWeatherData = async (type) => {
     const { value: key } = await Config.findOne({ key: WEATHER.ACCESS_TOKEN });
-    return axios.get(`${WEATHER.URL}/${ENDPOINTS[type]}?format=json`, {
+    return axios.get(`${WEATHER.URL}/${ENDPOINTS[type]}`, {
+        // params: PARAMS(WEATHER.PARAMS),
         headers: {
             Authorization: `Bearer ${key}`
         }
@@ -27,7 +28,26 @@ exports.list = async (req, res, next) => {
     try {
         const type = req.query.type;
         const { data: [data] } = await getWeatherData(type);
-        return HttpResponse(res, 'weather data retrieved', data);
+        return HttpResponse(res, 'weather data retrieved', data.map(COMMON));
+    } catch (err) {
+        return next(err);
+    }
+};
+
+exports.list = async (req, res, next) => {
+    try {
+        const type = req.query.type;
+        const { data: [data] } = await getWeatherData(type);
+        return HttpResponse(res, 'weather data retrieved', data.map(COMMON));
+    } catch (err) {
+        return next(err);
+    }
+};
+
+exports.raw = async (req, res, next) => {
+    try {
+        const { data: [data] } = await getWeatherData('raw');
+        return HttpResponse(res, 'weather data retrieved', data.map(RAW));
     } catch (err) {
         return next(err);
     }

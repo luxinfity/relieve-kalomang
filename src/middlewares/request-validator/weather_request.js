@@ -7,7 +7,7 @@ const validator = require('../request-handler/validator');
 const schemas = {
     list: Joi.object({
         query: Joi.object({
-            type: Joi.string().default('recent').valid('raw', 'recent', 'daily', 'monthly')
+            type: Joi.string().default('recent').valid('recent', 'daily', 'weekly', 'monthly')
         }).required()
     })
 };
