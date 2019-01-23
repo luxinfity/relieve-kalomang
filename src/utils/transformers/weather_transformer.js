@@ -39,14 +39,8 @@ const sensor = item => ({
 });
 
 const check = item => ({
-    temperature: {
-        celcius: +F2C(item.tempf).toFixed(2),
-        fahrenheit: +item.tempf
-    },
-    wind_speed: {
-        kph: +M2K(item.windspeedmph).toFixed(2),
-        mph: +item.windspeedmph
-    },
+    temperature: +F2C(item.tempf).toFixed(2),
+    wind_speed: +M2K(item.windspeedmph).toFixed(2),
     uv_index: +item.uv,
     rain_intensity: +item.rainin
 });

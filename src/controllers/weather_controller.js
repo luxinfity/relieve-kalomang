@@ -4,7 +4,7 @@ const axios = require('axios');
 const Promise = require('bluebird');
 
 const { HttpResponse } = require('../utils/helpers');
-const { WEATHER, ENDPOINTS } = require('../utils/constant');
+const { WEATHER, ENDPOINTS, CLASSIFICATION: CLASS } = require('../utils/constant');
 const { sensor: SENSOR, check: CHECK } = require('../utils/transformers/weather_transformer');
 
 const Config = require('../models/config');
@@ -19,6 +19,37 @@ const getWeatherData = async (type, params = {}) => {
         }
     });
 };
+
+const between = (x, min, max) => x >= min && x <= max;
+
+const detStat = (key, value) => {
+    let desc;
+    if (CLASS[key]) {
+        const chs = CLASS[key].find(item => between(value, item.min, item.max));
+        desc = {
+            id: chs.id,
+            en: chs.en
+        };
+    }
+    return { value, desc };
+};
+
+const determineStatuses = (items) => {
+    const len = items.length;
+    const sum = items.reduce((res, item) => {
+        Object.keys(item).forEach((key) => {
+            if (res[key]) { res[key] += item[key]; } else res[key] = item[key];
+        });
+        return res;
+    }, {});
+
+    Object.keys(sum).forEach((item) => {
+        sum[item] = detStat(item, sum[item] / len); // eslint-disable-line
+    });
+
+    return sum;
+};
+
 
 exports.list = async (req, res, next) => {
     try {
@@ -64,8 +95,10 @@ exports.check = async (req, res, next) => {
             windspeedmph: 'True'
         });
 
+        const transformed = sensorData.map(CHECK);
+        const final = determineStatuses(transformed);
 
-        return HttpResponse(res, 'weather check completed', sensorData.map(CHECK));
+        return HttpResponse(res, 'weather check completed', final);
     } catch (err) {
         return next(err);
     }
