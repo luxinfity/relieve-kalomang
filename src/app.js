@@ -7,8 +7,6 @@ const cors = require('cors');
 const mongodb = require('./utils/mongodb');
 const apiGuard = require('./middlewares/request-handler/api_guard');
 const rateLimiter = require('./utils/rate_limiter');
-const gmaps = require('./utils/gmaps');
-const gauth = require('./utils/gauth');
 const httpError = require('./utils/http_error');
 
 const routeHandler = require('./routes');
@@ -18,8 +16,6 @@ const app = express();
 
 /** Singleton Instances */
 mongodb.initialize();
-gmaps.initialize();
-gauth.initialize();
 httpError.initialize();
 /** */
 

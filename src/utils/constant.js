@@ -1,18 +1,7 @@
-const FAMILIY_REQUEST_STATUS = {
-    WAITING_VERIFICATION: 10,
-    VERIFIED: 20
-};
-
-const FAMILIY_CONDITION_STATUS = {
-    NO_CONDIITION: 10,
-    OKAY: 20,
-    NOT_OKAY: 30
-};
-
-const EMERGENCY_CONTACT_TYPES = ['police', 'fire_station', 'hospital'];
 
 module.exports = {
-    FAMILIY_REQUEST_STATUS,
-    FAMILIY_CONDITION_STATUS,
-    EMERGENCY_CONTACT_TYPES
+    WEATHER: {
+        URL: 'http://45.126.132.55:4444',
+        ACCESS_TOKEN: 'weather_access_token'
+    }
 };
