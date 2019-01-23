@@ -4,7 +4,7 @@ const axios = require('axios');
 
 const { HttpResponse } = require('../utils/helpers');
 const { WEATHER } = require('../utils/constant');
-const { common: COMMON, raw: RAW } = require('../utils/transformers/weather_transformer');
+// const { common: COMMON, raw: RAW } = require('../utils/transformers/weather_transformer');
 const Config = require('../models/config');
 
 const ENDPOINTS = {
@@ -14,10 +14,10 @@ const ENDPOINTS = {
     monthly: 'mothlydata'
 };
 
-const getWeatherData = async (type) => {
+const getWeatherData = async (type, params = {}) => {
     const { value: key } = await Config.findOne({ key: WEATHER.ACCESS_TOKEN });
     return axios.get(`${WEATHER.URL}/${ENDPOINTS[type]}`, {
-        // params: PARAMS(WEATHER.PARAMS),
+        params,
         headers: {
             Authorization: `Bearer ${key}`
         }
@@ -28,17 +28,7 @@ exports.list = async (req, res, next) => {
     try {
         const type = req.query.type;
         const { data: [data] } = await getWeatherData(type);
-        return HttpResponse(res, 'weather data retrieved', data.map(COMMON));
-    } catch (err) {
-        return next(err);
-    }
-};
-
-exports.list = async (req, res, next) => {
-    try {
-        const type = req.query.type;
-        const { data: [data] } = await getWeatherData(type);
-        return HttpResponse(res, 'weather data retrieved', data.map(COMMON));
+        return HttpResponse(res, 'weather data retrieved', data);
     } catch (err) {
         return next(err);
     }
@@ -47,7 +37,7 @@ exports.list = async (req, res, next) => {
 exports.raw = async (req, res, next) => {
     try {
         const { data: [data] } = await getWeatherData('raw');
-        return HttpResponse(res, 'weather data retrieved', data.map(RAW));
+        return HttpResponse(res, 'raw weather data retrieved', data);
     } catch (err) {
         return next(err);
     }

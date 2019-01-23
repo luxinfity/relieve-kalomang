@@ -13,6 +13,7 @@ const common = item => ({
 });
 
 const raw = item => ({
+    id: item.ID,
     rain_intensity: {
         daily: item.dailyrainin,
         weekly: item.weeklyrainin,
