@@ -20,5 +20,12 @@ module.exports = {
             'indoorhumidity',
             'baromin'
         ]
+    },
+    ENDPOINTS: {
+        raw: 'rawdata',
+        recent: 'recentdata',
+        daily: 'dailydata',
+        monthly: 'mothlydata',
+        sensor: 'sensor'
     }
 };

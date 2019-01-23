@@ -1,18 +1,14 @@
 'use strict';
 
 const axios = require('axios');
+const Promise = require('bluebird');
 
 const { HttpResponse } = require('../utils/helpers');
-const { WEATHER } = require('../utils/constant');
-// const { common: COMMON, raw: RAW } = require('../utils/transformers/weather_transformer');
-const Config = require('../models/config');
+const { WEATHER, ENDPOINTS } = require('../utils/constant');
+const { sensor: SENSOR } = require('../utils/transformers/weather_transformer');
 
-const ENDPOINTS = {
-    raw: 'rawdata',
-    recent: 'recentdata',
-    daily: 'dailydata',
-    monthly: 'mothlydata'
-};
+const Config = require('../models/config');
+const Sensor = require('../models/weather_sensor');
 
 const getWeatherData = async (type, params = {}) => {
     const { value: key } = await Config.findOne({ key: WEATHER.ACCESS_TOKEN });
@@ -26,7 +22,7 @@ const getWeatherData = async (type, params = {}) => {
 
 exports.list = async (req, res, next) => {
     try {
-        const type = req.query.type;
+        const { type } = req.query;
         const { data: [data] } = await getWeatherData(type);
         return HttpResponse(res, 'weather data retrieved', data);
     } catch (err) {
@@ -38,6 +34,31 @@ exports.raw = async (req, res, next) => {
     try {
         const { data: [data] } = await getWeatherData('raw');
         return HttpResponse(res, 'raw weather data retrieved', data);
+    } catch (err) {
+        return next(err);
+    }
+};
+
+exports.sensor = async (req, res, next) => {
+    try {
+        const { data: [data] } = await getWeatherData('sensor');
+        return HttpResponse(res, 'raw weather data retrieved', data);
+    } catch (err) {
+        return next(err);
+    }
+};
+
+exports.seedSensor = async (req, res, next) => {
+    try {
+        const { data: [sensors] } = await getWeatherData('sensor');
+
+        await Promise.map(sensors, sensor => Sensor.updateOne(
+            { name: sensor.ID },
+            SENSOR(sensor),
+            { upsert: true, setDefaultsOnInsert: true }
+        ), { concurrency: 10 });
+
+        return HttpResponse(res, 'weather sensor data updated');
     } catch (err) {
         return next(err);
     }

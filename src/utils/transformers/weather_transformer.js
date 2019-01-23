@@ -27,8 +27,18 @@ const params = parammeters => parammeters.reduce((res, param) => {
     return res;
 }, {});
 
+const sensor = item => ({
+    name: item.ID,
+    location_name: item.lokasi,
+    geograph: {
+        type: 'Point',
+        coordinates: [+item.lat, +item.long]
+    }
+});
+
 module.exports = {
     common,
     raw,
-    params
+    params,
+    sensor
 };

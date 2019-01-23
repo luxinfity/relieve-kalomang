@@ -5,6 +5,9 @@ const JWTAuth = require('../middlewares/request-handler/jwt_auth');
 
 router.get('/', JWTAuth, WeatherRequest('list'), WeatherController.list);
 router.get('/raw', JWTAuth, WeatherController.raw);
+router.get('/sensor', JWTAuth, WeatherController.sensor);
+
+router.post('/sensor/seed', WeatherController.seedSensor);
 router.post('/auth', WeatherController.auth);
 
 module.exports = router;
