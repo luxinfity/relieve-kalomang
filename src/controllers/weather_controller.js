@@ -5,7 +5,7 @@ const Promise = require('bluebird');
 
 const { HttpResponse } = require('../utils/helpers');
 const { WEATHER, ENDPOINTS } = require('../utils/constant');
-const { sensor: SENSOR } = require('../utils/transformers/weather_transformer');
+const { sensor: SENSOR, check: CHECK } = require('../utils/transformers/weather_transformer');
 
 const Config = require('../models/config');
 const Sensor = require('../models/weather_sensor');
@@ -43,6 +43,29 @@ exports.sensor = async (req, res, next) => {
     try {
         const { data: [data] } = await getWeatherData('sensor');
         return HttpResponse(res, 'raw weather data retrieved', data);
+    } catch (err) {
+        return next(err);
+    }
+};
+
+exports.check = async (req, res, next) => {
+    try {
+        /** get nearest sensor */
+        const [lat, lng] = req.query.coordinates.split(',');
+        const sensor = await Sensor.findOne(
+            { geograph: { $near: { $geometry: { type: 'Point', coordinates: [+lng, +lat] } } } }
+        );
+
+        const { data: [sensorData] } = await getWeatherData('recent', {
+            id: sensor.name,
+            limit: 2,
+            rainin: 'True',
+            uv: 'True',
+            windspeedmph: 'True'
+        });
+
+
+        return HttpResponse(res, 'weather check completed', sensorData.map(CHECK));
     } catch (err) {
         return next(err);
     }
