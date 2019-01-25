@@ -1,7 +1,7 @@
 
 module.exports = {
     WEATHER: {
-        URL: 'http://45.126.132.55:4444',
+        URL: 'https://api.darksky.net',
         ACCESS_TOKEN: 'weather_access_token',
         PARAMS: [
             'dewptf',
