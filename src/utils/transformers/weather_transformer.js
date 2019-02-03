@@ -45,10 +45,18 @@ const check = item => ({
     rain_intensity: +item.rainin
 });
 
+const get = item => ({
+    temperature: +F2C(item.temperature).toFixed(2),
+    wind_speed: +M2K(item.windSpeed).toFixed(2),
+    uv_index: +item.uvIndex,
+    rain_intensity: +item.precipIntensity
+});
+
 module.exports = {
     common,
     raw,
     params,
     sensor,
-    check
+    check,
+    get
 };
