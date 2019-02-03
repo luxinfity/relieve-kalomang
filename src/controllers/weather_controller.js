@@ -4,6 +4,8 @@ const axios = require('axios');
 
 const { HttpResponse } = require('../utils/helpers');
 const { WEATHER, CLASSIFICATION: CLASS } = require('../utils/constant');
+const { get: GET } = require('../utils/transformers/weather_transformer');
+
 
 const getWeatherData = coordinates => axios.get(`${WEATHER.URL}/forecast/${process.env.DARKSKY_SECRET_KEY}/${coordinates}`, {
     params: {
@@ -47,7 +49,10 @@ exports.get = async (req, res, next) => {
         const { coordinates } = req.params;
         const { data: { currently: data } } = await getWeatherData(coordinates);
 
-        return HttpResponse(res, 'weather data retrieved', data);
+        const transformed = GET(data);
+        const final = determineStatuses([transformed]);
+
+        return HttpResponse(res, 'weather data retrieved', final);
     } catch (err) {
         return next(err);
     }
