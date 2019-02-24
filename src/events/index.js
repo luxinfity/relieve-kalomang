@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 
 let instance;
-// const jobs = {};
 
 exports.registerListeners = () => {
     fs.readdirSync(path.join(__dirname, 'jobs')).forEach((jobFile) => {
