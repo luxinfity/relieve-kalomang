@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const { requestInput } = require('../../utils/helpers');
-const HttpError = require('../../common/http_error');
+const { HttpError } = require('../../common/http_error');
 
 module.exports = (schema, options = { stripUnknown: true, abortEarly: false }) => (req, res, next) => {
     const input = requestInput(req);

@@ -7,6 +7,7 @@ const cors = require('cors');
 const { MongoContext, HttpError } = require('./common');
 const apiGuard = require('./middlewares/request-handler/api_guard');
 const rateLimiter = require('./utils/rate_limiter');
+const Events = require('./events');
 
 const routeHandler = require('./routes');
 const exceptionHandler = require('./exceptions');
@@ -16,6 +17,7 @@ const app = express();
 /** Singleton Instances */
 MongoContext.initialize();
 HttpError.initialize();
+Events.initialize();
 /** */
 
 /** Thrid Party Plugins */
