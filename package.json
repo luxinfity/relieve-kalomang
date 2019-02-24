@@ -1,6 +1,6 @@
 {
-  "name": "exprestful",
-  "version": "1.0.1",
+  "name": "kalomang",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "node ./server.js",
@@ -15,16 +15,17 @@
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.5.3",
     "body-parser": "~1.18.2",
-    "cheerio": "^1.0.0-rc.2",
     "cors": "^2.8.4",
     "debug": "~2.6.9",
     "dotenv": "^5.0.1",
-    "express": "~4.15.5",
+    "express": "^4.16.4",
     "express-rate-limit": "^2.11.0",
     "helmet": "^3.12.0",
+    "ioredis": "^4.6.2",
     "joi": "^13.1.2",
     "joi-date-extensions": "^1.2.0",
     "jsonwebtoken": "^8.2.0",
+    "lodash": "^4.17.11",
     "mime": ">=1.4.1",
     "moment": "^2.21.0",
     "moment-timezone": "^0.5.23",
@@ -32,6 +33,7 @@
     "mongoose": "^5.4.0",
     "morgan": "~1.9.0",
     "randomstring": "^1.1.5",
+    "sequelize": "^4.42.0",
     "uuid": "^3.2.1"
   },
   "devDependencies": {

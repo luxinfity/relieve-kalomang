@@ -3,7 +3,7 @@
 const axios = require('axios');
 
 const { HttpResponse } = require('../utils/helpers');
-const { WEATHER, CLASSIFICATION: CLASS } = require('../utils/constant');
+const { WEATHER, CLASSIFICATION: CLASS } = require('../utils/weather');
 const { get: GET } = require('../utils/transformers/weather_transformer');
 
 

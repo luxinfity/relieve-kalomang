@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const mongodb = require('./utils/mongodb');
+const { MongoContext, HttpError } = require('./common');
 const apiGuard = require('./middlewares/request-handler/api_guard');
 const rateLimiter = require('./utils/rate_limiter');
-const httpError = require('./utils/http_error');
+const Events = require('./events');
 
 const routeHandler = require('./routes');
 const exceptionHandler = require('./exceptions');
@@ -15,8 +15,9 @@ const exceptionHandler = require('./exceptions');
 const app = express();
 
 /** Singleton Instances */
-mongodb.initialize();
-httpError.initialize();
+MongoContext.initialize();
+HttpError.initialize();
+Events.initialize();
 /** */
 
 /** Thrid Party Plugins */
