@@ -13,8 +13,8 @@ exports.save = async (data) => {
         const Repo = new Repository();
         await Repo.get('earthquake').create({
             source: 'BMKG',
-            magnitude: data.magnitude,
-            depth: data.depth,
+            magnitude: +data.magnitude,
+            depth: +data.depth,
             geograph: {
                 type: 'Point',
                 coordinates: [+data.longitude, +data.latitude]
