@@ -11,7 +11,11 @@ const cors = require('cors');
 
 /** Configuration file */
 const { mongodb: MongoConfig } = require('./config/database');
+const { firebase: firebaseConfig } = require('./config/plugins');
 const { MODELS_PATH } = require('./utils/constants');
+
+/** Plugin */
+const Firebase = require('./utils/libs/firebase');
 
 /** Handlers */
 const ApiGuard = require('./middlewares/api_guard');
@@ -26,6 +30,7 @@ const app = express();
 HttpError.initialize();
 MongoContext.initialize({ path: MODELS_PATH.MONGO, config: MongoConfig });
 JobWorker.initialize({ path: MODELS_PATH.JOB });
+Firebase.initialize(firebaseConfig);
 
 /** Plugins */
 app.use(helmet());

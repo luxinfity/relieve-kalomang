@@ -1,6 +1,8 @@
 'use strict';
 
 const Repository = require('../repositories');
+const FCM = require('../utils/messaging');
+const { isEmptyArray } = require('../utils/helpers');
 
 const AFFECTED_RADIUS = 50000; // meters
 
@@ -12,7 +14,12 @@ module.exports = async (data) => {
             if (item.user && item.user.fcm_token) acc.push(item.user.fcm_token);
             return acc;
         }, []);
-        console.log(fcmTokens); // eslint-disable-line
+
+        /** broadcast notification if not empty array */
+        if (!isEmptyArray(fcmTokens)) {
+            const notification = { title: 'earthquake', body: 'youre within an earthquake affected radius' };
+            await FCM.sendToDevice(fcmTokens, { data, notification });
+        }
     } catch (err) {
         console.error(err.message); // eslint-disable-line
     }
