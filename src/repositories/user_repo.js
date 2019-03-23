@@ -1,19 +1,46 @@
 const BaseRepository = require('./base_repository');
+const { offset } = require('../utils/helpers');
 
 class UserRepo extends BaseRepository {
-    async findOne(conditions) {
-        const mongo = await this.getMongoInstance();
-        return mongo.User.findOne(conditions);
+    async find(id, attributes) {
+        const db = await this.getDbInstance();
+        return db.User.findOne({ where: { id }, attributes });
     }
 
-    async create(payload) {
-        const mongo = await this.getMongoInstance();
-        return mongo.User.create(payload);
+    async findOne(conditions, attributes) {
+        const db = await this.getDbInstance();
+        return db.User.findOne({
+            where: conditions,
+            attributes
+        });
     }
 
-    async updateOne(conditions, payload) {
-        const mongo = await this.getMongoInstance();
-        return mongo.User.updateOne(conditions, payload);
+    async findAll(conditions, attributes) {
+        const db = await this.getDbInstance();
+        return db.User.findAll({ where: conditions, attributes });
+    }
+
+    async create(data) {
+        const db = await this.getDbInstance();
+        return db.User.create(data, { transaction: await this.getTransaction() });
+    }
+
+    async update(conditions, data) {
+        const db = await this.getDbInstance();
+        return db.User.update(data, {
+            where: conditions,
+            transaction: await this.getTransaction()
+        });
+    }
+
+    async paginate(conditions, { page = 1, limit = 10 }, attributes) {
+        const db = await this.getDbInstance();
+        return db.User.findAndCountAll({
+            where: conditions,
+            limit,
+            offset: offset(page, limit),
+            attributes
+        });
     }
 }
 

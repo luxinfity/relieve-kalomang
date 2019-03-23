@@ -1,13 +1,7 @@
-exports.HttpResponse = (res, message, content = null, status = 200) => res.status(status).json({
-    message,
-    status,
-    content
-});
+'use strict';
 
-exports.requestInput = req => ({
-    query: req.query || null,
-    params: req.params || null,
-    body: req.body || null
-});
+exports.parseDataObject = object => JSON.parse(JSON.stringify(object));
+
+exports.offset = (page = 1, limit = 10) => ((page - 1) * limit);
 
 module.exports = exports;

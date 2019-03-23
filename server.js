@@ -1,10 +1,11 @@
-require('dotenv').config();
+require('dotenv').config({ path: `./environments/${process.argv[2] ? process.argv[2] : 'local'}.env` });
 
 const http = require('http');
 const app = require('./src/app');
 
 const server = http.createServer(app);
 const port = parseInt(process.env.APP_PORT, 10) || 3000;
+
 const onError = (error) => {
     if (error.syscall !== 'listen') throw error;
 
@@ -31,7 +32,7 @@ const onListening = () => {
     const bind = typeof addr === 'string'
         ? `pipe ${addr}`
         : `port ${addr.port}`;
-    console.log(`Listening on ${bind}`); // eslint-disable-line
+    console.log(`Listening on ${bind}`);  // eslint-disable-line
 };
 
 app.set('port', port);

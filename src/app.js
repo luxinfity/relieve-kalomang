@@ -1,41 +1,45 @@
+'use strict';
+
+const {
+    HttpError, MongoContext, JobWorker
+} = require('node-common');
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const cors = require('cors');
 
-const { MongoContext, HttpError } = require('./common');
-const apiGuard = require('./middlewares/request-handler/api_guard');
-const rateLimiter = require('./utils/rate_limiter');
-const Events = require('./events');
+/** Configuration file */
+const { mongodb: MongoConfig } = require('./config/database');
+const { MODELS_PATH } = require('./utils/constants');
 
-const routeHandler = require('./routes');
-const exceptionHandler = require('./exceptions');
+/** Handlers */
+const ApiGuard = require('./middlewares/api_guard');
+const RateLimiter = require('./utils/libs/rate_limiter');
+const RouteHandler = require('./routes');
+const ExceptionHandler = require('./exceptions');
 
+/** Initialize Express */
 const app = express();
 
-/** Singleton Instances */
-MongoContext.initialize();
+/** Initialize common modules */
 HttpError.initialize();
-Events.initialize();
-/** */
+MongoContext.initialize({ path: MODELS_PATH.MONGO, config: MongoConfig });
+JobWorker.initialize({ path: MODELS_PATH.JOB });
 
-/** Thrid Party Plugins */
+/** Plugins */
 app.use(helmet());
 app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-/** */
 
 /** Global Middlewares */
-app.use(apiGuard);
-app.use(rateLimiter());
-/** */
+app.use(ApiGuard);
+app.use(RateLimiter());
 
-/** App Handlers */
-routeHandler(app);
-exceptionHandler(app);
-/** */
+/** Register Handlers */
+RouteHandler(app);
+ExceptionHandler(app);
 
 module.exports = app;

@@ -1,7 +1,9 @@
-const WeatherRoutes = require('../routes/weather_routes');
-const EarthquakeRoutes = require('../routes/earthquake_routes');
+'use strict';
+
+const AuthRoutes = require('../routes/auth_route');
+const UserRoutes = require('../routes/user_route');
 
 module.exports = (app) => {
-    app.use('/weather', WeatherRoutes);
-    app.use('/earthquake', EarthquakeRoutes);
+    app.use('/auth', AuthRoutes);
+    app.use('/user', UserRoutes);
 };

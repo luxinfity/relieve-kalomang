@@ -1,5 +1,8 @@
+'use strict';
+
+const { HttpError } = require('node-common');
+
 module.exports = (req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
+    const err = HttpError.NotFound('Not Found');
     return next(err);
 };
