@@ -2,15 +2,15 @@
 
 const router = require('express').Router();
 
-const { login, logout, refresh } = require('../methods/authentication');
+const { callback } = require('../methods/earthquakes');
+const { get } = require('../methods/weathers');
 const { ExpressLogicAdapter: Logic } = require('../utils/libs/express');
 
 const Validator = require('../middlewares/request_validator');
 const AuthGuard = require('../middlewares/auth_guard');
 
-/** Auth Routes */
-router.post('/login', Validator('login'), Logic(login));
-router.post('/logout', AuthGuard, Logic(logout));
-router.post('/refresh', Validator('refresh'), Logic(refresh));
+/** Routes */
+router.get('/weather/:coordinates', AuthGuard, Validator('getWeather'), Logic(get));
+router.post('/earthquake/callback', Logic(callback));
 
 module.exports = router;

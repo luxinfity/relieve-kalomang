@@ -15,6 +15,7 @@
     "lint": "eslint --fix src/**"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "~1.18.2",
     "cors": "^2.8.4",
@@ -29,7 +30,9 @@
     "lodash": "^4.17.11",
     "mime": ">=1.4.1",
     "moment": "^2.21.0",
+    "moment-timezone": "^0.5.23",
     "mongoose": "^5.4.19",
+    "mongoose-uuid2": "^2.3.0",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.5",
     "node-common": "git+https://github.com/archisdi/node-common.git",

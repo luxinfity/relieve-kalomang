@@ -1,9 +1,7 @@
 'use strict';
 
-const AuthRoutes = require('../routes/auth_route');
-const UserRoutes = require('../routes/user_route');
+const MainRoutes = require('../routes/main_routes');
 
 module.exports = (app) => {
-    app.use('/auth', AuthRoutes);
-    app.use('/user', UserRoutes);
+    app.use('/', MainRoutes);
 };

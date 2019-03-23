@@ -3,16 +3,12 @@
 const Joi = require('joi');
 const { HttpError } = require('node-common');
 
+const COOR_REGEX = /^([-+]?)([\d]{1,2})(((\.)(\d+)(,)))(\s*)(([-+]?)([\d]{1,3})((\.)(\d+))?)$/;
+
 const schemas = {
-    login: Joi.object({
-        body: Joi.object({
-            username: Joi.string().required(),
-            password: Joi.string().required()
-        }).required()
-    }),
-    refresh: Joi.object({
-        body: Joi.object({
-            refresh_token: Joi.string().required()
+    getWeather: Joi.object({
+        params: Joi.object({
+            coordinates: Joi.string().regex(COOR_REGEX).required()
         }).required()
     })
 };

@@ -1,20 +1,20 @@
 const BaseRepository = require('./base_repository');
 
-class UserRepo extends BaseRepository {
+class EarthquakeRepo extends BaseRepository {
     async findOne(conditions) {
         const mongo = await this.getMongoInstance();
-        return mongo.User.findOne(conditions);
+        return mongo.Earthquake.findOne(conditions);
     }
 
     async create(payload) {
         const mongo = await this.getMongoInstance();
-        return mongo.User.create(payload);
+        return mongo.Earthquake.create(payload);
     }
 
     async updateOne(conditions, payload) {
         const mongo = await this.getMongoInstance();
-        return mongo.User.updateOne(conditions, payload);
+        return mongo.Earthquake.updateOne(conditions, payload);
     }
 }
 
-module.exports = UserRepo;
+module.exports = EarthquakeRepo;
