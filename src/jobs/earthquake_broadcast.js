@@ -17,7 +17,7 @@ module.exports = async (data) => {
 
         /** broadcast notification if not empty array */
         if (!isEmptyArray(fcmTokens)) {
-            const notification = { title: 'earthquake', body: 'youre within an earthquake affected radius' };
+            const notification = { title: 'earthquake', body: 'you\'re within an earthquake affected radius' };
             await FCM.sendToDevice(fcmTokens, { data, notification });
         }
     } catch (err) {
