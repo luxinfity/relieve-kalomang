@@ -1,7 +1,7 @@
 'use strict';
 
 const Joi = require('joi');
-const { HttpError } = require('node-common');
+const { HttpError } = require('relieve-common');
 
 const COOR_REGEX = /^([-+]?)([\d]{1,2})(((\.)(\d+)(,)))(\s*)(([-+]?)([\d]{1,3})((\.)(\d+))?)$/;
 

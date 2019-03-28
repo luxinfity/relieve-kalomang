@@ -1,7 +1,7 @@
 'use strict';
 
 const axios = require('axios');
-const { HttpError } = require('node-common');
+const { HttpError } = require('relieve-common');
 
 const { WEATHER, CLASSIFICATION: CLASS } = require('../utils/libs/weather');
 const { get: GET } = require('../utils/transformers/weather_transformer');

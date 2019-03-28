@@ -1,6 +1,6 @@
 'use strict';
 
-const { HttpError, JobWorker } = require('node-common');
+const { HttpError, JobWorker } = require('relieve-common');
 
 exports.callback = async (data, context) => {
     try {

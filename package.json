@@ -36,7 +36,7 @@
     "mongoose-uuid2": "^2.3.0",
     "morgan": "~1.9.0",
     "mysql2": "^1.6.5",
-    "node-common": "git+https://github.com/archisdi/node-common.git",
+    "relieve-common": "git+https://github.com/RelieveID/relieve-common.git",
     "randomstring": "^1.1.5",
     "sequelize": "^5.1.0",
     "sequelize-cli": "^5.4.0",

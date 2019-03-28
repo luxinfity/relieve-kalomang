@@ -1,8 +1,8 @@
 'use strict';
 
 const {
-    HttpError, MongoContext, JobWorker
-} = require('node-common');
+    HttpError, MongoContext, JobWorker, Firebase
+} = require('relieve-common');
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
@@ -13,9 +13,6 @@ const cors = require('cors');
 const { mongodb: MongoConfig } = require('./config/database');
 const { firebase: firebaseConfig } = require('./config/plugins');
 const { MODELS_PATH } = require('./utils/constants');
-
-/** Plugin */
-const Firebase = require('./utils/libs/firebase');
 
 /** Handlers */
 const ApiGuard = require('./middlewares/api_guard');
