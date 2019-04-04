@@ -31,10 +31,12 @@ exports.getEarthQuakeList = async (data, context) => {
         return {
             message: 'earthquake data retrieved',
             data: {
-                total,
-                content: earthquakeList(earthquakes),
-                page,
-                limit
+                data: earthquakeList(earthquakes),
+                meta: {
+                    total_page: Math.ceil(total / limit),
+                    page,
+                    limit
+                }
             }
         };
     } catch (err) {
