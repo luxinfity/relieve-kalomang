@@ -26,7 +26,8 @@ class EarthquakeRepo extends BaseRepository {
         return mongo.Earthquake
             .find(conditions)
             .skip((limit * page) - limit)
-            .limit(limit);
+            .limit(limit)
+            .sort({ occurs_at: -1 });
     }
 }
 
