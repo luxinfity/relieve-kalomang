@@ -30,7 +30,7 @@
     "jsonwebtoken": "^8.2.0",
     "lodash": "^4.17.21",
     "mime": ">=1.4.1",
-    "moment": "^2.21.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.23",
     "mongoose": "^5.7.5",
     "mongoose-uuid2": "^2.3.0",
